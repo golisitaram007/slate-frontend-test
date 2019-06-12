@@ -1,19 +1,22 @@
-import React        from 'react'
-import { Incident } from '../components/Incident'
+import React        from 'react';
+import { mapStateWithProps } from '../../lib/rsflux';
+import store from '../store';
+import IncidentsTable from '../components/table/IncidentsTable';
+import Loading from '../components/Loading';
 
-export function Home () {
+const Home = (props) => {
+  const { incidents } = props.state;
   return (
-    <div>
-      <Incident
-        title="Test incident"
-        assignee="Admin"
-        status="Resolved"
-      />
-      <Incident
-        title="Another incident"
-        assignee="Engineer"
-        status="Acknowledged"
-      />
+    <div className="table-responsive-sm">
+      {
+        incidents ? 
+          <IncidentsTable incidents={ incidents }/>
+          :
+          <Loading />
+      }
+      
     </div>
   )
 }
+
+export default mapStateWithProps(store)(Home);
